@@ -4,6 +4,7 @@ import pytz
 from flask import Request, Response, request, g
 from time import gmtime, strftime
 from datetime import datetime
+from tzlocal import get_localzone
 
 import ConfigParser
 import cStringIO
@@ -16,7 +17,7 @@ import csv
 from .errors import *
 
 tz_utc = pytz.timezone('UTC')
-default_tz = pytz.timezone(strftime("%Z", gmtime()))
+default_tz = pytz.timezone(str(get_localzone()))
 
 
 def set_default_tz(tz):

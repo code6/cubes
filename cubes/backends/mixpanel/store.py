@@ -10,6 +10,7 @@ from .mixpanel import *
 from .mapper import cube_event_key
 from string import capwords
 import pkgutil
+from tzlocal import get_localzone
 import time, pytz
 
 DIMENSION_COUNT_LIMIT = 100
@@ -225,7 +226,7 @@ class MixpanelStore(Store):
         if tz is not None:
             tz = pytz.timezone(tz)
         else:
-            tz = pytz.timezone(time.strftime('%Z', time.localtime()))
+            tz = pytz.timezone(str(get_localzone()))
         self.tz = tz
         self.logger = get_logger()
 
