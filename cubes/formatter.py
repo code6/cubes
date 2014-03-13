@@ -16,8 +16,20 @@ __all__ = [
             "SimpleDataTableFormatter",
             "SimpleHTMLTableFormatter",
             "CrossTableFormatter",
-            "HTMLCrossTableFormatter"
+            "HTMLCrossTableFormatter",
+
+            "create_formatter",
             ]
+
+def create_formatter(formatter):
+    formatter_dict = {
+            'text_table' : TextTableFormatter,
+            'simple_data_table' : SimpleDataTableFormatter,
+            'simple_html_table' : SimpleHTMLTableFormatter,
+            'cross_table' : CrossTableFormatter,
+            'html_cross_table' : HTMLCrossTableFormatter,
+    }
+    return formatter_dict.get(formatter)().format
 
 
 def _jinja_env():
