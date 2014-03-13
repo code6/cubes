@@ -69,8 +69,8 @@
         }
     ],
     
-    "dimensions": {
-        "cpv" : {
+    "dimensions": [
+        {
             "name": "cpv",
             "label": "Common Procurement Vocabulary",
             "key": "cpv_id",
@@ -130,7 +130,8 @@
             ],
             "hierarchy": ["division", "group", "class", "category", "detail"]
         },
-        "date" : {
+        {
+            "name": "date",
             "label" : "Date",
             "info": {
                 "cv-datefilter": true
@@ -168,7 +169,8 @@
             ],
             "hierarchy" : ["year", "month", "day"]
         },
-        "procurer" : {
+        {
+            "name": "procurer",
             "label": "Procurer",
             "levels" : [
                 {
@@ -195,7 +197,8 @@
             ],
             "hierarchy": ["sector", "procurer"]
         },
-        "supplier" : {
+        {
+            "name":"supplier",
             "label": "Supplier",
             "levels" : [
                 {
@@ -218,7 +221,8 @@
                 }
             ]
         },
-        "process_type" : {
+        {
+            "name": "process_type",
             "label": "Procurement type",
             "levels": [
                 {
@@ -232,7 +236,8 @@
                 }
             ]
         },
-        "criteria" : {
+        {
+            "name":"criteria",
             "label": "Evalutaion criteria",
             "levels": [
                 {
@@ -246,7 +251,8 @@
                 }
             ]
         },
-        "geography": {
+        {
+            "name": "geography",
             "label": "Region",
             "levels": [
                 {
@@ -265,7 +271,6 @@
                 }
             ],
             "hierarchy": ["kraj", "okres"]
-            
         }
-    }    
+    ]    
 }

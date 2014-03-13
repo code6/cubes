@@ -1,10 +1,11 @@
 from flask import Flask, render_template, request, g
-import cubes
+from cubes import Workspace, Cell, cuts_from_string, get_logger
+from cubes.server import slicer, workspace
 import os.path
 
 import logging
 
-logger = cubes.get_logger()
+logger = get_logger()
 logger.setLevel(logging.DEBUG)
 
 app = Flask(__name__)
@@ -21,19 +22,24 @@ CUBE_NAME = "contracts"
 # workspace = None
 # model = None
 
+@app.route("/favicon.ico")
+def favicon():
+    return make_response("")
+
 @app.route("/")
 @app.route("/<dim_name>")
 def report(dim_name=None):
 
-    browser = workspace.browser(model.cube(CUBE_NAME))
+    browser = workspace.browser(CUBE_NAME)
+    cube = browser.cube
 
     if not dim_name:
-        return render_template('report.html', dimensions=model.dimensions)
+        return render_template('report.html', dimensions=cube.dimensions)
 
     # First we need to get the hierarchy to know the order of levels. Cubes
     # supports multiple hierarchies internally.
     
-    dimension = model.dimension(dim_name)
+    dimension = cube.dimension(dim_name)
     hierarchy = dimension.hierarchy()
 
     # Parse the`cut` request parameter and convert it to a list of 
@@ -42,7 +48,7 @@ def report(dim_name=None):
     # browsing.
 
     cutstr = request.args.get("cut")
-    cell = cubes.Cell(browser.cube, cubes.cuts_from_string(cutstr))
+    cell = Cell(cube, cuts_from_string(cube, cutstr))
 
     # Get the cut of actually browsed dimension, so we know "where we are" -
     # the current dimension path
@@ -81,7 +87,7 @@ def report(dim_name=None):
     # Finally, we render it
 
     return render_template('report.html',
-                            dimensions=model.dimensions,
+                            dimensions=cube.dimensions,
                             dimension=dimension,
                             levels=levels,
                             next_level=next_level,
@@ -92,5 +98,5 @@ def report(dim_name=None):
 
 
 if __name__ == "__main__":
-    app.debug = True
-    app.run()
+    app.register_blueprint(slicer, url_prefix="/slicer", config="slicer.ini")
+    app.run(debug=True, host='0.0.0.0')
