@@ -7,7 +7,7 @@ from ...browser import *
 from ...logging import get_logger
 from ...statutils import calculators_for_aggregates, available_calculators
 from ...errors import *
-from .mapper import SnowflakeMapper, DenormalizedMapper
+from .mapper import PsnowflakeMapper, DenormalizedMapper
 from .functions import get_aggregate_function, available_aggregate_functions
 from .query import QueryBuilder
 
@@ -23,11 +23,11 @@ except ImportError:
     sqlalchemy = sql = MissingPackage("sqlalchemy", "SQL aggregation browser")
 
 __all__ = [
-    "SnowflakeBrowser",
+    "PsnowflakeBrowser",
 ]
 
 
-class SnowflakeBrowser(AggregationBrowser):
+class PsnowflakeBrowser(AggregationBrowser):
     __options__ = [
         {
             "name": "include_summary",
@@ -76,7 +76,7 @@ class SnowflakeBrowser(AggregationBrowser):
         * locale is implemented as denormalized: one column for each language
 
         """
-        super(SnowflakeBrowser, self).__init__(cube, store)
+        super(PsnowflakeBrowser, self).__init__(cube, store)
 
         if not cube:
             raise ArgumentError("Cube for browser should not be None.")
@@ -122,7 +122,7 @@ class SnowflakeBrowser(AggregationBrowser):
         if options.get("use_denormalization"):
             mapper_class = DenormalizedMapper
         else:
-            mapper_class = SnowflakeMapper
+            mapper_class = PsnowflakeMapper
 
         self.logger.debug("using mapper %s for cube '%s' (locale: %s)" %
                           (str(mapper_class.__name__), cube.name, locale))

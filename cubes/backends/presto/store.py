@@ -1,6 +1,6 @@
 # -*- coding=utf -*-
-from .browser import SnowflakeBrowser
-from .mapper import SnowflakeMapper
+from .browser import PsnowflakeBrowser
+from .mapper import PsnowflakeMapper
 from ...logging import get_logger
 from ...common import coalesce_options
 from ...stores import Store
@@ -20,7 +20,7 @@ except ImportError:
 
 __all__ = [
     "create_sqlalchemy_engine",
-    "Presto_SQLStore",
+    "PrestoStore",
 ]
 
 
@@ -95,12 +95,12 @@ def create_sqlalchemy_engine(url, options, prefix="sqlalchemy_"):
 
     return engine
 
-class Presto_SQLStore(Store):
+class PrestoStore(Store):
 
     def model_provider_name(self):
         return 'default'
 
-    default_browser_name = "snowflake"
+    default_browser_name = "psnowflake"
 
     def __init__(self, url=None, engine=None, schema=None, **options):
         """
@@ -222,7 +222,7 @@ class Presto_SQLStore(Store):
 
         cube = self.model.cube(cube)
 
-        mapper = SnowflakeMapper(cube, cube.mappings, schema=schema, **self.options)
+        mapper = PsnowflakeMapper(cube, cube.mappings, schema=schema, **self.options)
         context = QueryContext(cube, mapper, schema=schema, metadata=self.metadata)
 
         key_attributes = []
@@ -352,7 +352,7 @@ class Presto_SQLStore(Store):
         * `replace` – if ``True`` then existing table will be replaced,
           otherwise an exception is raised if table already exists.
         """
-        mapper = SnowflakeMapper(cube, cube.mappings, schema=schema, **self.options)
+        mapper = PsnowflakeMapper(cube, cube.mappings, schema=schema, **self.options)
         context = QueryContext(cube, mapper, schema=schema, etadata=self.metadata)
 
         dimension = cube.dimension(dimension)

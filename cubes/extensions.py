@@ -20,9 +20,10 @@ _default_modules = {
         "mixpanel":"cubes.backends.mixpanel.store",
         "slicer":"cubes.backends.slicer.store",
         "ga":"cubes.backends.ga.store",
-        "presto_sql":"cubes.backends.presto_sql.store",
+        "presto":"cubes.backends.presto.store",
     },
     "browser": {
+        "psnowflake":"cubes.backends.presto_sql.browser",
         "snowflake":"cubes.backends.sql.browser",
         "snapshot": "cubes.backends.sql.browser",
         "mixpanel":"cubes.backends.mixpanel.browser",

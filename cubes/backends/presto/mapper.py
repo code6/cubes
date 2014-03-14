@@ -8,7 +8,7 @@ from collections import namedtuple
 from ...model import AttributeBase
 
 __all__ = (
-    "SnowflakeMapper",
+    "PsnowflakeMapper",
     "DenormalizedMapper",
     "TableColumnReference",
     "TableJoin",
@@ -103,7 +103,7 @@ def coalesce_physical(ref, default_table=None, schema=None):
                                "be 2 (table, column) or 3 (schema, table, column)")
 
 
-class SnowflakeMapper(Mapper):
+class PsnowflakeMapper(Mapper):
     """Mapper is core clas for translating logical model to physical
     database schema.
     """
@@ -153,7 +153,7 @@ class SnowflakeMapper(Mapper):
 
         """
 
-        super(SnowflakeMapper, self).__init__(cube, locale=locale, **options)
+        super(PsnowflakeMapper, self).__init__(cube, locale=locale, **options)
 
         self.mappings = mappings or cube.mappings
         self.dimension_prefix = dimension_prefix or ""
@@ -231,7 +231,15 @@ class SnowflakeMapper(Mapper):
                     table name is fact table name
         """
 
-        schema = self.dimension_schema or self.schema
+        dimension = attribute.dimension
+        if dimension and not (self.simplify_dimension_references \
+                               and (dimension.is_flat
+                                    and not dimension.has_details)):
+            table_name = "%s%s%s" % (self.dimension_prefix, dimension, self.dimension_suffix)
+            schema = self.dimension_schema
+        else:
+            table_name = self.fact_name
+            schema = self.schema
 
         if isinstance(attribute, PhysicalAttribute):
             reference = TableColumnReference(schema,
@@ -274,13 +282,6 @@ class SnowflakeMapper(Mapper):
                 column_name += "_" + locale
 
             # TODO: temporarily preserved. it should be attribute.owner
-            dimension = attribute.dimension
-            if dimension and not (self.simplify_dimension_references \
-                                   and (dimension.is_flat
-                                        and not dimension.has_details)):
-                table_name = "%s%s%s" % (self.dimension_prefix, dimension, self.dimension_suffix)
-            else:
-                table_name = self.fact_name
 
             reference = TableColumnReference(schema, table_name, column_name, None, None, None, None)
 
