@@ -113,12 +113,18 @@
             ],
             "aggregates": [
                 {
-                    "name": "order_count1",
+                    "name": "order_count",
                     "function": "sum",
                     "measure": "order_count"
                 }
             ],
-            "mappings": {}
+            "mappings": {
+                "date.day" : {
+                  "schema": "dim",
+                  "table": "date",
+                  "column": "datekey"
+                }
+            }
         }
     ]
 }

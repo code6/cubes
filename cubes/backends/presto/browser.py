@@ -193,9 +193,9 @@ class PsnowflakeBrowser(AggregationBrowser):
         builder.denormalized_statement(cell,
                                        attributes,
                                        include_fact_key=True)
-        builder.paginate(page, page_size)
-        order = self.prepare_order(order, is_aggregate=False)
-        builder.order(order)
+        #builder.paginate(page, page_size)
+        #order = self.prepare_order(order, is_aggregate=False)
+        #builder.order(order)
 
         cursor = self.execute_statement(builder.statement,
                                         "facts")
@@ -230,8 +230,8 @@ class PsnowflakeBrowser(AggregationBrowser):
 
         builder = QueryBuilder(self)
         builder.members_statement(cell, attributes)
-        builder.paginate(page, page_size)
-        builder.order(order)
+        #builder.paginate(page, page_size)
+        #builder.order(order)
 
         result = self.execute_statement(builder.statement, "members")
 
@@ -257,7 +257,8 @@ class PsnowflakeBrowser(AggregationBrowser):
         builder.denormalized_statement(cell,
                                        attributes,
                                        include_fact_key=True)
-        builder.paginate(0, 1)
+        #builder.paginate(0, 1)
+        builder.limit(1)
         cursor = self.execute_statement(builder.statement,
                                         "path details")
 
@@ -375,9 +376,9 @@ class PsnowflakeBrowser(AggregationBrowser):
                                           drilldown=drilldown,
                                           aggregates=aggregates,
                                           split=split)
-            builder.paginate(page, page_size)
-            order = self.prepare_order(order, is_aggregate=True)
-            builder.order(order)
+            #builder.paginate(page, page_size)
+            #order = self.prepare_order(order, is_aggregate=True)
+            #builder.order(order)
 
             cursor = self.execute_statement(builder.statement,
                                             "aggregation drilldown")

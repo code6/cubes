@@ -1623,6 +1623,13 @@ class QueryBuilder(object):
 
         return self.statement
 
+    def limit(self, size):
+        """Returns limited statement if size is provided, otherwise returns
+        the same statement."""
+        if size is not None:
+            self.statement = self.statement.limit(size)
+        return self.statement 
+
     def order(self, order):
         """Returns a SQL statement which is ordered according to the `order`. If
         the statement contains attributes that have natural order specified, then
