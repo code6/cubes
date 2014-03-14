@@ -20,6 +20,7 @@ _default_modules = {
         "mixpanel":"cubes.backends.mixpanel.store",
         "slicer":"cubes.backends.slicer.store",
         "ga":"cubes.backends.ga.store",
+        "presto_sql":"cubes.backends.presto_sql.store",
     },
     "browser": {
         "snowflake":"cubes.backends.sql.browser",
@@ -35,6 +36,7 @@ _default_modules = {
     },
     "request_log_handler": {
         "sql":"cubes.backends.sql.logging",
+        "presto_sql":"cubes.backends.presto_sql.logging",
     },
 }
 
