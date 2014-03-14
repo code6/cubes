@@ -1,0 +1,124 @@
+{
+    "dimensions": [
+        {
+            "name": "date",
+            "label": "Date",
+            "role": "time",
+            "levels": [
+                {
+                    "name": "year",
+                    "label": "Year",
+                    "attributes": [
+                        {
+                            "name": "year",
+                            "order": "asc"
+                        }
+                    ]
+                },
+                {
+                    "name": "quarter",
+                    "label": "Quarter",
+                    "attributes": [
+                        {
+                            "name": "quarter",
+                            "order": "asc"
+                        }
+                    ]
+                },
+                {
+                    "name": "month",
+                    "label": "Month",
+                    "attributes": [
+                        {
+                            "name": "month",
+                            "order": "asc"
+                        },
+                        {
+                            "name": "month_name"
+                        }
+                    ]
+                },
+                {
+                    "name": "day",
+                    "label": "Day",
+                    "attributes": [
+                        {
+                            "name": "day",
+                            "order": "asc"
+                        }
+                    ]
+                },
+                {
+                    "name": "day_of_week",
+                    "label": "Day of Week",
+                    "attributes": [
+                        {
+                            "name": "day_of_week",
+                            "order": "asc"
+                        },
+                        {
+                            "name": "day_name"
+                        }
+                    ]
+                }
+            ],
+            "hierarchies": [
+                {
+                    "name": "ymd",
+                    "levels": [
+                        "year",
+                        "month",
+                        "day"
+                    ]
+                },
+                {
+                    "name": "yqmd",
+                    "levels": [
+                        "year",
+                        "quarter",
+                        "month",
+                        "day"
+                    ]
+                },
+                {
+                    "name": "weekday",
+                    "levels": [
+                        "day_of_week"
+                    ]
+                }
+            ]
+        }
+    ],
+    "cubes": [
+        {
+            "name": "order__city_daily_client_type",
+            "dimensions": [
+                "date"
+            ],
+            "joins": [
+                {
+                    "master": "datekey",
+                    "detail": {
+                        "schema" :"dim",
+                        "table": "date",
+                        "column": "datekey"
+                    }
+                }
+            ],
+            "measures": [
+                {
+                    "name": "order_count",
+                    "label": "Order Count"
+                }
+            ],
+            "aggregates": [
+                {
+                    "name": "order_count1",
+                    "function": "sum",
+                    "measure": "order_count"
+                }
+            ],
+            "mappings": {}
+        }
+    ]
+}
