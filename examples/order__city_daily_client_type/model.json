@@ -3,6 +3,9 @@
         {
             "name": "date",
             "label": "Date",
+            "info": {
+                "cv-datefilter": true
+            },
             "role": "time",
             "levels": [
                 {
@@ -10,10 +13,10 @@
                     "label": "Year",
                     "attributes": [
                         {
-                            "name": "year",
-                            "order": "asc"
+                            "name": "year"
                         }
-                    ]
+                    ],
+                    "info": { "cv-datefilter-field": "year" }
                 },
                 {
                     "name": "quarter",
@@ -23,7 +26,8 @@
                             "name": "quarter",
                             "order": "asc"
                         }
-                    ]
+                    ],
+                    "info": { "cv-datefilter-field": "quarter" }
                 },
                 {
                     "name": "month",
@@ -36,7 +40,8 @@
                         {
                             "name": "month_name"
                         }
-                    ]
+                    ],
+                    "info": { "cv-datefilter-field": "month" }
                 },
                 {
                     "name": "day",
@@ -46,7 +51,8 @@
                             "name": "day",
                             "order": "asc"
                         }
-                    ]
+                    ],
+                    "info": { "cv-datefilter-field": "day" }
                 },
                 {
                     "name": "day_of_week",
@@ -59,7 +65,8 @@
                         {
                             "name": "day_name"
                         }
-                    ]
+                    ],
+                    "info": { "cv-datefilter-field": "week" }
                 }
             ],
             "hierarchies": [
@@ -159,13 +166,70 @@
         {
             "name": "clienttype",
             "label": "Client Type"
+        },
+        {
+            "name": "dealcategory",
+            "label": "Dealcategory",
+            "levels": [
+                {
+                    "name": "typeid",
+                    "label": "Deal Category",
+                    "attributes": [
+                        {
+                            "name": "typeid"
+                        }
+                    ]
+                },
+                {
+                    "name": "level",
+                    "label": "Deal Category level",
+                    "attributes": [
+                        {
+                            "name": "level"
+                        }
+                    ]
+                },
+                {
+                    "name": "classid",
+                    "label": "Class",
+                    "attributes": [
+                        {
+                            "name": "classid"
+                        },
+                        {
+                            "name": "classname"
+                        }
+                    ]
+                },
+                {
+                    "name": "categoryid",
+                    "label": "Category",
+                    "attributes": [
+                        {
+                            "name": "categoryid"
+                        },
+                        {
+                            "name": "categoryname"
+                        }
+                    ]
+                }
+            ],
+            "hierarchies": [
+                {
+                    "name": "dealcategory_level",
+                    "levels": [
+                        "level",
+                        "typeid"
+                    ]
+                }
+            ]
         }
     ],
     "cubes": [
         {
             "name": "order__city_daily_client_type",
             "dimensions": [
-                "date", "city", "clienttype"
+                "date", "city", "clienttype", "dealcategory"
             ],
             "joins": [
                 {
@@ -183,12 +247,68 @@
                         "table": "city",
                         "column": "cityid"
                     }
+                },
+                {
+                    "master": "typeid",
+                    "detail": {
+                        "schema" :"dim",
+                        "table": "dealcategory",
+                        "column": "typeid"
+                    }
                 }
             ],
             "measures": [
                 {
                     "name": "order_count",
                     "label": "Order Count"
+                },
+                {
+                    "name": "pay_count",
+                    "label": "Pay Count"
+                },
+                {
+                    "name": "quantity",
+                    "label": "Quantity"
+                },
+                {
+                    "name": "revenue",
+                    "label": "Revenue"
+                },
+                {
+                    "name": "profit",
+                    "label": "Profit"
+                },
+                {
+                    "name": "rebate",
+                    "label": "Pay Count"
+                },
+                {
+                    "name": "giftcard",
+                    "label": "Giftcard"
+                },
+                {
+                    "name": "recharge",
+                    "label": "Recharge"
+                },
+                {
+                    "name": "direct",
+                    "label": "Direct"
+                },
+                {
+                    "name": "magiccard",
+                    "label": "Magiccard"
+                },
+                {
+                    "name": "buyer_count",
+                    "label": "Buyer Count"
+                },
+                {
+                    "name": "first_buyer_count",
+                    "label": "First Buyer Count"
+                },
+                {
+                    "name": "client_first_buyer_count",
+                    "label": "Client First Buyer Count"
                 }
             ],
             "aggregates": [
@@ -198,8 +318,64 @@
                     "measure": "order_count"
                 },
                 {
-                    "name": "record_count",
-                    "function": "count"
+                    "name": "pay_count_sum",
+                    "function": "sum",
+                    "measure": "pay_count"
+                },
+                {
+                    "name": "quantity_sum",
+                    "function": "sum",
+                    "measure": "quantity"
+                },
+                {
+                    "name": "revenue_sum",
+                    "function": "sum",
+                    "measure": "revenue"
+                },
+                {
+                    "name": "profit_sum",
+                    "function": "sum",
+                    "measure": "profit"
+                },
+                {
+                    "name": "rebate_sum",
+                    "function": "sum",
+                    "measure": "rebate"
+                },
+                {
+                    "name": "giftcard_sum",
+                    "function": "sum",
+                    "measure": "giftcard"
+                },
+                {
+                    "name": "recharge_sum",
+                    "function": "sum",
+                    "measure": "recharge"
+                },
+                {
+                    "name": "direct_sum",
+                    "function": "sum",
+                    "measure": "direct"
+                },
+                {
+                    "name": "magiccard_sum",
+                    "function": "sum",
+                    "measure": "magiccard"
+                },
+                {
+                    "name": "buyer_count_sum",
+                    "function": "sum",
+                    "measure": "buyer_count"
+                },
+                {
+                    "name": "first_buyer_count_sum",
+                    "function": "sum",
+                    "measure": "first_buyer_count"
+                },
+                {
+                    "name": "client_first_buyer_count_sum",
+                    "function": "sum",
+                    "measure": "client_first_buyer_count"
                 }
             ],
             "mappings": {
