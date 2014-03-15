@@ -254,6 +254,54 @@
                 {
                     "name": "order_count",
                     "label": "Order Count"
+                },
+                {
+                    "name": "pay_count",
+                    "label": "Pay Count"
+                },
+                {
+                    "name": "quantity",
+                    "label": "Quantity"
+                },
+                {
+                    "name": "revenue",
+                    "label": "Revenue"
+                },
+                {
+                    "name": "profit",
+                    "label": "Profit"
+                },
+                {
+                    "name": "rebate",
+                    "label": "Pay Count"
+                },
+                {
+                    "name": "giftcard",
+                    "label": "Giftcard"
+                },
+                {
+                    "name": "recharge",
+                    "label": "Recharge"
+                },
+                {
+                    "name": "direct",
+                    "label": "Direct"
+                },
+                {
+                    "name": "magiccard",
+                    "label": "Magiccard"
+                },
+                {
+                    "name": "buyer_count",
+                    "label": "Buyer Count"
+                },
+                {
+                    "name": "first_buyer_count",
+                    "label": "First Buyer Count"
+                },
+                {
+                    "name": "client_first_buyer_count",
+                    "label": "Client First Buyer Count"
                 }
             ],
             "aggregates": [
@@ -263,8 +311,64 @@
                     "measure": "order_count"
                 },
                 {
-                    "name": "record_count",
-                    "function": "count"
+                    "name": "pay_count_sum",
+                    "function": "sum",
+                    "measure": "pay_count"
+                },
+                {
+                    "name": "quantity_sum",
+                    "function": "sum",
+                    "measure": "quantity"
+                },
+                {
+                    "name": "revenue_sum",
+                    "function": "sum",
+                    "measure": "revenue"
+                },
+                {
+                    "name": "profit_sum",
+                    "function": "sum",
+                    "measure": "profit"
+                },
+                {
+                    "name": "rebate_sum",
+                    "function": "sum",
+                    "measure": "rebate"
+                },
+                {
+                    "name": "giftcard_sum",
+                    "function": "sum",
+                    "measure": "giftcard"
+                },
+                {
+                    "name": "recharge_sum",
+                    "function": "sum",
+                    "measure": "recharge"
+                },
+                {
+                    "name": "direct_sum",
+                    "function": "sum",
+                    "measure": "direct"
+                },
+                {
+                    "name": "magiccard_sum",
+                    "function": "sum",
+                    "measure": "magiccard"
+                },
+                {
+                    "name": "buyer_count_sum",
+                    "function": "sum",
+                    "measure": "buyer_count"
+                },
+                {
+                    "name": "first_buyer_count_sum",
+                    "function": "sum",
+                    "measure": "first_buyer_count"
+                },
+                {
+                    "name": "client_first_buyer_count_sum",
+                    "function": "sum",
+                    "measure": "client_first_buyer_count"
                 }
             ],
             "mappings": {

@@ -68,7 +68,14 @@
 
 <table class="table table-striped table-bordered">
     <thead>
-    <tr><th>{{next_level.label or next_level.name}}</th><th>Count</th><th>Amount</th></tr>
+    <tr>
+        <th>{{next_level.label or next_level.name}}</th>
+        <th>Count</th>
+        <th>Amount</th>
+        <th>Count</th>
+        <th>Amount</th>
+        <th>Count</th>
+    </tr>
     </thead>
     <tbody>
     {% for row in result.table_rows(dimension) %}
@@ -80,12 +87,18 @@
             <a href="?cut={{cell.drilldown(dimension, row.key)}}">{{row.label}}</a>
         {% endif %}
         </td>
-        <td>{{row.record.record_count}}</td>
+        <td>{{row.record.profit_sum}}</td>
+        <td>{{row.record.revenue_sum}}</td>
+        <td>{{row.record.quantity_sum}}</td>
+        <td>{{row.record.pay_count_sum}}</td>
         <td>{{row.record.order_count_sum}}</td>
     </tr>
     {% endfor %}
     <tr><th>Total</th>
-        <th>{{result.summary.record_count}}</th>
+        <th>{{result.summary.profit_sum}}</th>
+        <th>{{result.summary.revenue_sum}}</th>
+        <th>{{result.summary.quantity_sum}}</th>
+        <th>{{result.summary.pay_count_sum}}</th>
         <th>{{result.summary.order_count_sum}}</th></tr>
         
     </tbody>
