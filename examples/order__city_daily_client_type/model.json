@@ -109,7 +109,7 @@
                     ]
                 },
                 {
-                    "name": "cityid",
+                    "name": "name",
                     "label": "City",
                     "attributes": [
                         {
@@ -150,7 +150,7 @@
                     "name": "city_rank",
                     "levels": [
                         "rank",
-                        "cityid"
+                        "name"
                     ]
                 },
                 {
@@ -158,7 +158,7 @@
                     "levels": [
                         "region_id",
                         "district_id",
-                        "cityid"
+                        "name"
                     ]
                 }
             ]
@@ -172,11 +172,11 @@
             "label": "Dealcategory",
             "levels": [
                 {
-                    "name": "typeid",
+                    "name": "categoryname",
                     "label": "Deal Category",
                     "attributes": [
                         {
-                            "name": "typeid"
+                            "name": "categoryname"
                         }
                     ]
                 },
@@ -219,7 +219,7 @@
                     "name": "dealcategory_level",
                     "levels": [
                         "level",
-                        "typeid"
+                        "categoryname"
                     ]
                 }
             ]
