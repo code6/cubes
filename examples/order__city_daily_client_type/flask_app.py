@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, g
+from flask import Flask, render_template, request, g, make_response
 from cubes import Workspace, Cell, cuts_from_string, get_logger
 from cubes.server import slicer, workspace
 import os.path
