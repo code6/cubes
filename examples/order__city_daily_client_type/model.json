@@ -3,6 +3,9 @@
         {
             "name": "date",
             "label": "Date",
+            "info": {
+                "cv-datefilter": true
+            },
             "role": "time",
             "levels": [
                 {
@@ -10,10 +13,10 @@
                     "label": "Year",
                     "attributes": [
                         {
-                            "name": "year",
-                            "order": "asc"
+                            "name": "year"
                         }
-                    ]
+                    ],
+                    "info": { "cv-datefilter-field": "year" }
                 },
                 {
                     "name": "quarter",
@@ -23,7 +26,8 @@
                             "name": "quarter",
                             "order": "asc"
                         }
-                    ]
+                    ],
+                    "info": { "cv-datefilter-field": "quarter" }
                 },
                 {
                     "name": "month",
@@ -36,7 +40,8 @@
                         {
                             "name": "month_name"
                         }
-                    ]
+                    ],
+                    "info": { "cv-datefilter-field": "month" }
                 },
                 {
                     "name": "day",
@@ -46,7 +51,8 @@
                             "name": "day",
                             "order": "asc"
                         }
-                    ]
+                    ],
+                    "info": { "cv-datefilter-field": "day" }
                 },
                 {
                     "name": "day_of_week",
@@ -59,7 +65,8 @@
                         {
                             "name": "day_name"
                         }
-                    ]
+                    ],
+                    "info": { "cv-datefilter-field": "week" }
                 }
             ],
             "hierarchies": [
