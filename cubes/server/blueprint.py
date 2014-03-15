@@ -238,6 +238,36 @@ def get_info():
 def show_info():
     return jsonify(get_info())
 
+@slicer.route("/model")
+def show_model():
+    cube_list = workspace.list_cubes(g.auth_identity)
+    r = {}
+    cubes = []
+    dims = []
+    if "lang" in request.args:
+        g.locale = request.args.get("lang")
+    else:
+        g.locale = None
+
+    for c in cube_list:
+        cube_name = c["name"]
+        try:
+            g.cube = authorized_cube(cube_name, locale=g.locale)
+            response = g.cube.to_dict(#expand_dimensions=True,
+                                      with_mappings=False,
+                                      full_attribute_names=True,
+                                      create_label=True,
+                                      )
+            cubes.append(response)
+            dims.extend(g.cube.dimensions)
+        except NoSuchCubeError:
+            raise NotFoundError(cube_name, "cube",
+                                "Unknown cube '%s'" % cube_name)
+
+    r["cubes"] = cubes
+    r["locales"] = []
+    r["dimensions"] = dims
+    return jsonify(r)
 
 @slicer.route("/cubes")
 def list_cubes():
