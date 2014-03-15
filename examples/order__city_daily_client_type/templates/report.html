@@ -129,10 +129,11 @@
         <th>{{result.summary.client_first_buyer_count_sum}}</th>
     </tbody>
 </table>
-<div id="container" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
+<div id="container-count" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
+<div id="container-money" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
 <script type="text/javascript">
 jQuery(document).ready(function () {
-        jQuery('#container').highcharts({
+        jQuery('#container-count').highcharts({
             chart: {
                 type: 'column'
             },
@@ -143,24 +144,13 @@ jQuery(document).ready(function () {
                 categories: [
                     "下单数",
                     "支付订单数",
-                    "销量",
-                    "交易额",
-                    "毛收入",
-                    "返利支付",
-                    "充值卡充值支付",
-                    "直接充值支付",
-                    "直接支付",
-                    "代金券支付",
                     "购买用户数",
                     "纯新首次购买用户数",
                     "平台首次购买用户数"
                 ]
             },
             yAxis: {
-                min: 0,
-                // title: {
-                //     text: 'Rainfall (mm)'
-                // }
+                min: 0
             },
             tooltip: {
                 headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
@@ -181,7 +171,54 @@ jQuery(document).ready(function () {
                 {
                     name: '{{row.label}}',
                     data: [
-                        {{row.record.order_count_sum}},{{row.record.pay_count_sum}},{{row.record.quantity_sum}},{{row.record.revenue_sum}},{{row.record.profit_sum}},{{row.record.rebate_sum}},{{row.record.giftcard_sum}},{{row.record.recharge_sum}},{{row.record.direct_sum}},{{row.record.magiccard_sum}},{{row.record.buyer_count_sum}},{{row.record.first_buyer_count_sum}},{{row.record.client_first_buyer_count_sum}}
+                        {{row.record.order_count_sum}},{{row.record.pay_count_sum}},{{row.record.buyer_count_sum}},{{row.record.first_buyer_count_sum}},{{row.record.client_first_buyer_count_sum}}
+                    ]
+                },
+                {% endfor %}
+            ]
+        });
+        jQuery('#container-money').highcharts({
+            chart: {
+                type: 'column'
+            },
+            title: {
+                text: '各城市拆平台品类的订单汇总'
+            },
+            xAxis: {
+                categories: [
+                    "销量",
+                    "交易额",
+                    "毛收入",
+                    "返利支付",
+                    "充值卡充值支付",
+                    "直接充值支付",
+                    "直接支付",
+                    "代金券支付",
+                ]
+            },
+            yAxis: {
+                min: 0
+            },
+            tooltip: {
+                headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
+                pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
+                    '<td style="padding:0"><b>{point.y:.1f} </b></td></tr>',
+                footerFormat: '</table>',
+                shared: true,
+                useHTML: true
+            },
+            plotOptions: {
+                column: {
+                    pointPadding: 0.2,
+                    borderWidth: 0
+                }
+            },
+            series: [
+                {% for row in result_table_rows %}
+                {
+                    name: '{{row.label}}',
+                    data: [
+                        {{row.record.quantity_sum}},{{row.record.revenue_sum}},{{row.record.profit_sum}},{{row.record.rebate_sum}},{{row.record.giftcard_sum}},{{row.record.recharge_sum}},{{row.record.direct_sum}},{{row.record.magiccard_sum}}
                     ]
                 },
                 {% endfor %}
