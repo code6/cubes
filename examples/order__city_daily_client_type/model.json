@@ -87,13 +87,81 @@
                     ]
                 }
             ]
+        },
+        {
+            "name": "city",
+            "label": "City",
+            "levels": [
+                {
+                    "name": "rank",
+                    "label": "City Rank",
+                    "attributes": [
+                        {
+                            "name": "rank"
+                        }
+                    ]
+                },
+                {
+                    "name": "cityid",
+                    "label": "City",
+                    "attributes": [
+                        {
+                            "name": "cityid"
+                        },
+                        {
+                            "name": "name"
+                        }
+                    ]
+                },
+                {
+                    "name": "region_id",
+                    "label": "Region",
+                    "attributes": [
+                        {
+                            "name": "region_id"
+                        },
+                        {
+                            "name": "region_name"
+                        }
+                    ]
+                },
+                {
+                    "name": "district_id",
+                    "label": "District",
+                    "attributes": [
+                        {
+                            "name": "district_id"
+                        },
+                        {
+                            "name": "district_name"
+                        }
+                    ]
+                }
+            ],
+            "hierarchies": [
+                {
+                    "name": "city_rank",
+                    "levels": [
+                        "rank",
+                        "cityid"
+                    ]
+                },
+                {
+                    "name": "city_region",
+                    "levels": [
+                        "region_id",
+                        "district_id",
+                        "cityid"
+                    ]
+                }
+            ]
         }
     ],
     "cubes": [
         {
             "name": "order__city_daily_client_type",
             "dimensions": [
-                "date"
+                "date", "city"
             ],
             "joins": [
                 {
@@ -102,6 +170,14 @@
                         "schema" :"dim",
                         "table": "date",
                         "column": "datekey"
+                    }
+                },
+                {
+                    "master": "cityid",
+                    "detail": {
+                        "schema" :"dim",
+                        "table": "city",
+                        "column": "cityid"
                     }
                 }
             ],
@@ -113,9 +189,13 @@
             ],
             "aggregates": [
                 {
-                    "name": "order_count",
+                    "name": "order_count_sum",
                     "function": "sum",
                     "measure": "order_count"
+                },
+                {
+                    "name": "record_count",
+                    "function": "count"
                 }
             ],
             "mappings": {

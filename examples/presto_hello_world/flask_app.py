@@ -99,4 +99,4 @@ def report(dim_name=None):
 
 if __name__ == "__main__":
     app.register_blueprint(slicer, url_prefix="/slicer", config="slicer.ini")
-    app.run(debug=True, host='0.0.0.0')
+    app.run(debug=True, host='0.0.0.0', port=10000)

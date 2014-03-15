@@ -81,12 +81,12 @@
         {% endif %}
         </td>
         <td>{{row.record.record_count}}</td>
-        <td>{{row.record.contract_amount_sum}}</td>
+        <td>{{row.record.order_count_sum}}</td>
     </tr>
     {% endfor %}
     <tr><th>Total</th>
         <th>{{result.summary.record_count}}</th>
-        <th>{{result.summary.amount_sum}}</th></tr>
+        <th>{{result.summary.order_count_sum}}</th></tr>
         
     </tbody>
 </table>
