@@ -155,13 +155,17 @@
                     ]
                 }
             ]
+        },
+        {
+            "name": "clienttype",
+            "label": "Client Type"
         }
     ],
     "cubes": [
         {
             "name": "order__city_daily_client_type",
             "dimensions": [
-                "date", "city"
+                "date", "city", "clienttype"
             ],
             "joins": [
                 {

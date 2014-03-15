@@ -23,7 +23,7 @@ _default_modules = {
         "presto":"cubes.backends.presto.store",
     },
     "browser": {
-        "psnowflake":"cubes.backends.presto_sql.browser",
+        "psnowflake":"cubes.backends.presto.browser",
         "snowflake":"cubes.backends.sql.browser",
         "snapshot": "cubes.backends.sql.browser",
         "mixpanel":"cubes.backends.mixpanel.browser",
@@ -37,7 +37,7 @@ _default_modules = {
     },
     "request_log_handler": {
         "sql":"cubes.backends.sql.logging",
-        "presto_sql":"cubes.backends.presto_sql.logging",
+        "presto":"cubes.backends.presto.logging",
     },
 }
 
