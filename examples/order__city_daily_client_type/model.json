@@ -159,13 +159,70 @@
         {
             "name": "clienttype",
             "label": "Client Type"
+        },
+        {
+            "name": "dealcategory",
+            "label": "Dealcategory",
+            "levels": [
+                {
+                    "name": "typeid",
+                    "label": "Deal Category",
+                    "attributes": [
+                        {
+                            "name": "typeid"
+                        }
+                    ]
+                },
+                {
+                    "name": "level",
+                    "label": "Deal Category level",
+                    "attributes": [
+                        {
+                            "name": "level"
+                        }
+                    ]
+                },
+                {
+                    "name": "classid",
+                    "label": "Class",
+                    "attributes": [
+                        {
+                            "name": "classid"
+                        },
+                        {
+                            "name": "classname"
+                        }
+                    ]
+                },
+                {
+                    "name": "categoryid",
+                    "label": "Category",
+                    "attributes": [
+                        {
+                            "name": "categoryid"
+                        },
+                        {
+                            "name": "categoryname"
+                        }
+                    ]
+                }
+            ],
+            "hierarchies": [
+                {
+                    "name": "dealcategory_level",
+                    "levels": [
+                        "level",
+                        "typeid"
+                    ]
+                }
+            ]
         }
     ],
     "cubes": [
         {
             "name": "order__city_daily_client_type",
             "dimensions": [
-                "date", "city", "clienttype"
+                "date", "city", "clienttype", "dealcategory"
             ],
             "joins": [
                 {
@@ -182,6 +239,14 @@
                         "schema" :"dim",
                         "table": "city",
                         "column": "cityid"
+                    }
+                },
+                {
+                    "master": "typeid",
+                    "detail": {
+                        "schema" :"dim",
+                        "table": "dealcategory",
+                        "column": "typeid"
                     }
                 }
             ],
