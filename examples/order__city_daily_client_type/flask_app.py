@@ -94,6 +94,7 @@ def report(dim_name=None):
                             levels=levels,
                             next_level=next_level,
                             result=result,
+                            result_table_rows= [r for r in result.table_rows(dimension)],
                             cell=cell,
                             is_last=is_last,
                             details=details)

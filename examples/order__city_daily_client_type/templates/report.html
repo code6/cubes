@@ -3,6 +3,9 @@
     <title>Cubes</title>
     <link rel="stylesheet" href="{{url_for('static', filename='bootstrap.min.css')}}" type="text/css" />
     <link rel="stylesheet" href="{{url_for('static', filename='bootstrap-responsive.min.css')}}" type="text/css" />
+    <script type="text/javascript" src="http://code.jquery.com/jquery-1.9.1.js"></script>
+    <script src="http://code.highcharts.com/highcharts.js"></script>
+    <script src="http://code.highcharts.com/modules/exporting.js"></script>
 </head>
 <body>
 
@@ -70,15 +73,23 @@
     <thead>
     <tr>
         <th>{{next_level.label or next_level.name}}</th>
-        <th>Count</th>
-        <th>Amount</th>
-        <th>Count</th>
-        <th>Amount</th>
-        <th>Count</th>
+        <th>下单数</th>
+        <th>支付订单数</th>
+        <th>销量</th>
+        <th>交易额</th>
+        <th>毛收入</th>
+        <th>返利支付</th>
+        <th>充值卡充值支付</th>
+        <th>直接充值支付</th>
+        <th>直接支付</th>
+        <th>代金券支付</th>
+        <th>购买用户数</th>
+        <th>纯新首次购买用户数</th>
+        <th>平台首次购买用户数</th>  
     </tr>
     </thead>
     <tbody>
-    {% for row in result.table_rows(dimension) %}
+    {% for row in result_table_rows %}
     <tr>
         <td>
         {% if is_last %}
@@ -87,23 +98,97 @@
             <a href="?cut={{cell.drilldown(dimension, row.key)}}">{{row.label}}</a>
         {% endif %}
         </td>
-        <td>{{row.record.profit_sum}}</td>
-        <td>{{row.record.revenue_sum}}</td>
-        <td>{{row.record.quantity_sum}}</td>
+        <td>{{row.record.order_count_sum}}</td>         
         <td>{{row.record.pay_count_sum}}</td>
-        <td>{{row.record.order_count_sum}}</td>
+        <td>{{row.record.quantity_sum}}</td>
+        <td>{{row.record.revenue_sum}}</td>
+        <td>{{row.record.profit_sum}}</td>
+        <td>{{row.record.rebate_sum}}</td>
+        <td>{{row.record.giftcard_sum}}</td>
+        <td>{{row.record.recharge_sum}}</td>
+        <td>{{row.record.direct_sum}}</td>
+        <td>{{row.record.magiccard_sum}}</td>
+        <td>{{row.record.buyer_count_sum}}</td>
+        <td>{{row.record.first_buyer_count_sum}}</td>
+        <td>{{row.record.client_first_buyer_count_sum}}</td>
     </tr>
     {% endfor %}
     <tr><th>Total</th>
-        <th>{{result.summary.profit_sum}}</th>
-        <th>{{result.summary.revenue_sum}}</th>
-        <th>{{result.summary.quantity_sum}}</th>
+        <th>{{result.summary.order_count_sum}}</th>         
         <th>{{result.summary.pay_count_sum}}</th>
-        <th>{{result.summary.order_count_sum}}</th></tr>
-        
+        <th>{{result.summary.quantity_sum}}</th>
+        <th>{{result.summary.revenue_sum}}</th>
+        <th>{{result.summary.profit_sum}}</th>
+        <th>{{result.summary.rebate_sum}}</th>
+        <th>{{result.summary.giftcard_sum}}</th>
+        <th>{{result.summary.recharge_sum}}</th>
+        <th>{{result.summary.direct_sum}}</th>
+        <th>{{result.summary.magiccard_sum}}</th>
+        <th>{{result.summary.buyer_count_sum}}</th>
+        <th>{{result.summary.first_buyer_count_sum}}</th>
+        <th>{{result.summary.client_first_buyer_count_sum}}</th>
     </tbody>
 </table>
-
+<div id="container" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
+<script type="text/javascript">
+jQuery(document).ready(function () {
+        jQuery('#container').highcharts({
+            chart: {
+                type: 'column'
+            },
+            title: {
+                text: '各城市拆平台品类的订单汇总'
+            },
+            xAxis: {
+                categories: [
+                    "下单数",
+                    "支付订单数",
+                    "销量",
+                    "交易额",
+                    "毛收入",
+                    "返利支付",
+                    "充值卡充值支付",
+                    "直接充值支付",
+                    "直接支付",
+                    "代金券支付",
+                    "购买用户数",
+                    "纯新首次购买用户数",
+                    "平台首次购买用户数"
+                ]
+            },
+            yAxis: {
+                min: 0,
+                // title: {
+                //     text: 'Rainfall (mm)'
+                // }
+            },
+            tooltip: {
+                headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
+                pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
+                    '<td style="padding:0"><b>{point.y:.1f} </b></td></tr>',
+                footerFormat: '</table>',
+                shared: true,
+                useHTML: true
+            },
+            plotOptions: {
+                column: {
+                    pointPadding: 0.2,
+                    borderWidth: 0
+                }
+            },
+            series: [
+                {% for row in result_table_rows %}
+                {
+                    name: '{{row.label}}',
+                    data: [
+                        {{row.record.order_count_sum}},{{row.record.pay_count_sum}},{{row.record.quantity_sum}},{{row.record.revenue_sum}},{{row.record.profit_sum}},{{row.record.rebate_sum}},{{row.record.giftcard_sum}},{{row.record.recharge_sum}},{{row.record.direct_sum}},{{row.record.magiccard_sum}},{{row.record.buyer_count_sum}},{{row.record.first_buyer_count_sum}},{{row.record.client_first_buyer_count_sum}}
+                    ]
+                },
+                {% endfor %}
+            ]
+        });
+    });
+</script>
 {% endif %} <!-- if dim -->
 </div>
 </body>
